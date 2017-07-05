@@ -1,11 +1,19 @@
+require 'pry'
 class StudentsController < ApplicationController
   before_action :set_student, only: :show
-  
+
   def index
     @students = Student.all
   end
 
   def show
+    @student_message = @student.active?
+  end
+
+  def update
+    @student = Student.find(params[:id])
+    @student.update(active:!@student.active)
+    redirect_to student_path(@student)
   end
 
   private
